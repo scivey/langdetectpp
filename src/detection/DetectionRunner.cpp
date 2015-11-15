@@ -1,7 +1,7 @@
 #include <vector>
 #include <string>
 #include "profiles/Profile.h"
-#include "Language.h"
+#include <langdetectpp/Language.h>
 #include "profiles/Profile.h"
 #include "profiles/ProfileGroup.h"
 #include "util/CircleArray.h"

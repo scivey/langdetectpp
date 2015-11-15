@@ -3,7 +3,7 @@
 #include <memory>
 #include <tuple>
 #include "profiles/Profile.h"
-#include "Language.h"
+#include <langdetectpp/Language.h>
 #include "util/stats.h"
 #include "ngrams/ExtractedNGrams.h"
 

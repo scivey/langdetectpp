@@ -16,6 +16,7 @@ endif()
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/external/googletest/googlemock/include
     ${CMAKE_CURRENT_SOURCE_DIR}/external/googletest/googletest/include
     ${CMAKE_CURRENT_SOURCE_DIR}/external/mirror_utf8cpp/source
@@ -119,13 +120,13 @@ add_library(langdetectpp
 )
 target_link_libraries(langdetectpp ${COMMON_LINK_LIBS})
 
-set(RUNNER_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
+set(FUNC_TEST_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/functional_test.cpp
 )
 
-add_executable(runner
-    ${RUNNER_SOURCES}
+add_executable(func_test_runner
+    ${FUNC_TEST_SOURCES}
 )
 
-add_dependencies(runner langdetectpp)
-target_link_libraries(runner langdetectpp ${COMMON_LINK_LIBS})
+add_dependencies(func_test_runner langdetectpp)
+target_link_libraries(func_test_runner langdetectpp ${COMMON_LINK_LIBS})

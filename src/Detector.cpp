@@ -1,10 +1,10 @@
 #include <memory>
 #include <string>
 
-#include "Detector.h"
+#include <langdetectpp/Detector.h>
+#include <langdetectpp/Language.h>
 #include "detection/DetectorImpl.h"
 #include "profiles/ProfileGroup.h"
-#include "Language.h"
 
 using namespace std;
 using langdetectpp::detection::DetectorImpl;

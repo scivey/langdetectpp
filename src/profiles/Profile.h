@@ -2,7 +2,7 @@
 #include <unordered_map>
 #include <tuple>
 #include <string>
-#include "Language.h"
+#include <langdetectpp/Language.h>
 #include <folly/Hash.h>
 #include <memory>
 

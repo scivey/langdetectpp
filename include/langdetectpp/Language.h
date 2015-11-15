@@ -64,7 +64,7 @@ enum class Language {
 
 std::string stringOfLanguage(Language lang);
 
-std::string englishLanguageName(Language lang);
+std::string englishNameOfLanguage(Language lang);
 
 
 } // langdetectpp

@@ -2,7 +2,7 @@
 
 #include <memory>
 #include "ngrams/NGramExtractor.h"
-#include "Language.h"
+#include <langdetectpp/Language.h>
 #include "profiles/ProfileGroup.h"
 #include "detection/DetectionRunner.h"
 

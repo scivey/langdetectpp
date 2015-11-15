@@ -1,3 +1,4 @@
+#include <cassert>
 #include <string>
 #include <sstream>
 
@@ -13,35 +14,31 @@
 
 #include <glog/logging.h>
 #include <boost/filesystem.hpp>
-#include "utf8.h"
-#include "profiles/Profile.h"
-#include "profiles/ProfileGroup.h"
-#include "util/CircleArray.h"
-#include "util/misc.h"
-#include "Language.h"
-#include "ngrams/NGramExtractor.h"
-#include "Detector.h"
+#include <langdetectpp/langdetectpp.h>
 using namespace std;
 namespace bfs = boost::filesystem;
+using langdetectpp::Language;
 int main() {
-  vector<string> files {
-    "ar_from_wikipedia.txt",
-    "en_jezebel.txt",
-    "ru_from_wikipedia.txt",
-    "de_from_wikipedia.txt",
-    "fr_from_wikipedia.txt",
-    "es_from_wikipedia.txt"
+  vector<pair<string, Language>> files {
+    {"ar_from_wikipedia.txt", Language::AR},
+    {"en_jezebel.txt", Language::EN},
+    {"ru_from_wikipedia.txt", Language::RU},
+    {"de_from_wikipedia.txt", Language::DE},
+    {"fr_from_wikipedia.txt", Language::FR},
+    {"es_from_wikipedia.txt", Language::ES}
   };
 
   size_t maxLen = 0;
   for (auto &elem: files) {
-    if (elem.size() > maxLen) {
-      maxLen = elem.size();
+    auto fname = elem.first;
+    if (fname.size() > maxLen) {
+      maxLen = fname.size();
     }
   }
   auto detector = langdetectpp::Detector::create();
   bfs::path basePath = bfs::canonical("./../text");
-  for (string fname: files) {
+  for (auto &elem: files) {
+    string fname = elem.first;
     bfs::path filePath = basePath / fname;
     string strPath = filePath.string();
     string data;
@@ -54,6 +51,7 @@ int main() {
     for (size_t i = fname.size(); i < maxLen; i++) {
       logLine << " ";
     }
-    LOG(INFO) << logLine.str() << "  ->  " << langdetectpp::englishLanguageName(lang);
+    LOG(INFO) << logLine.str() << "  ->  " << langdetectpp::englishNameOfLanguage(lang);
+    assert(elem.second == lang);
   }
 }

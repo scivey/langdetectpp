@@ -1,4 +1,4 @@
-#include "Language.h"
+#include <langdetectpp/Language.h>
 #include <string>
 
 namespace langdetectpp {
@@ -65,7 +65,7 @@ std::string stringOfLanguage(Language lang) {
   }
 }
 
-std::string englishLanguageName(Language lang) {
+std::string englishNameOfLanguage(Language lang) {
   switch (lang) {
     case Language::AR : return "Arabic";
     case Language::DE : return "German";
