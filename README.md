@@ -1,6 +1,6 @@
 ## langdetectpp
 
-C++ port of the Java [https://github.com/shuyo/language-detection](language-detection) library.
+C++ port of the Java [language-detection](https://github.com/shuyo/language-detection) library.
 
 It analyzes UTF8-encoded text and returns the most likely human language of the contents.
 
@@ -71,3 +71,9 @@ std::string englishNameOfLanguage(langdetectpp::Language)
     cout << langName << endl;
     // "Arabic"
 ```
+
+### license
+
+Apache License version 2.0 (commercial-friendly) -- see the `LICENSE` file for the formal version.
+
+Language profiles are taken from [the original Java language-detection project](https://github.com/shuyo/language-detection/blob/wiki/ProjectHome.md).  These profiles are (c) 2010-2014 Cybozu Labs, Inc., and are likewise licensed under Apache 2.0 (and are also commercial-friendly).  The `LICENSE` file contains the text of the original license for the profiles.
