@@ -1,18 +1,25 @@
 cmake_minimum_required(VERSION 2.8)
 
 project(data_structures)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMakeLibs)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++11")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --stdlib=libstdc++")
+include(CheckCXXCompilerFlag)
+include(AddCXXCompilerFlag)
+
+
+add_cxx_compiler_flag(--std=c++11)
+add_cxx_compiler_flag(-Wall)
+if (DEFINED USING_CLANG)
+    add_cxx_compiler_flag(-stdlib=libstdc++)
+endif()
 
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/src
-    /usr/include
-    /usr/local/include
     ${CMAKE_CURRENT_SOURCE_DIR}/external/googletest/googlemock/include
     ${CMAKE_CURRENT_SOURCE_DIR}/external/googletest/googletest/include
     ${CMAKE_CURRENT_SOURCE_DIR}/external/mirror_utf8cpp/source
+    /usr/local/include
 )
 
 set(GTEST_LIB
@@ -43,8 +50,7 @@ set(TEST_LIBS
     ${COMMON_LINK_LIBS}
 )
 
-set(RUNNER_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
+set(LIB_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/util/Language.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/profiles/Profile.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/profiles/ProfileGroup.cpp
@@ -106,7 +112,18 @@ set(RUNNER_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/profiles/zh_tw.cpp
 )
 
-add_executable(runner ${RUNNER_SOURCES})
-target_link_libraries(runner
-    ${COMMON_LINK_LIBS}
+add_library(langdetectpp
+    ${LIB_SOURCES}
 )
+target_link_libraries(langdetectpp ${COMMON_LINK_LIBS})
+
+set(RUNNER_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
+)
+
+add_executable(runner
+    ${RUNNER_SOURCES}
+)
+
+add_dependencies(runner langdetectpp)
+target_link_libraries(runner langdetectpp ${COMMON_LINK_LIBS})
