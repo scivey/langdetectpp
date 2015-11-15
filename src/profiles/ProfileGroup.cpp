@@ -8,7 +8,7 @@
 
 using namespace std;
 
-namespace profiles {
+namespace langdetectpp { namespace profiles {
 
 shared_ptr<ProfileGroup> ProfileGroup::create() {
   shared_ptr<ProfileGroup> result(new ProfileGroup);
@@ -75,4 +75,4 @@ shared_ptr<ProfileGroup> ProfileGroup::create() {
   return result;
 }
 
-} // profiles
+}} // langdetectpp::profiles

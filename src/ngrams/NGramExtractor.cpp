@@ -8,7 +8,8 @@
 #include "util/CircleArray.h"
 #include "ngrams/ExtractedNGrams.h"
 #include "ngrams/NGramExtractor.h"
-namespace ngrams {
+
+namespace langdetectpp { namespace ngrams {
 
 NGramExtractor::NGramExtractor(const std::string &text): textRef_(text){
   iter_ = (char*) textRef_.c_str();
@@ -55,4 +56,4 @@ ExtractedNGrams NGramExtractor::extract() {
   );
 }
 
-} // ngrams
+}} // langdetectpp::ngrams

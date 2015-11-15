@@ -9,7 +9,8 @@
 #include "utf8.h"
 #include "util/CircleArray.h"
 #include "util/stats.h"
-namespace ngrams {
+
+namespace langdetectpp { namespace ngrams {
 
 class ExtractedNGrams {
   std::vector<uint32_t> oneGrams_;
@@ -40,4 +41,4 @@ class ExtractedNGrams {
   }
 };
 
-}
+}} // langdetectpp::ngrams

@@ -27,7 +27,7 @@ def print_impl(filename):
     for collection in (one_grams, bigrams, trigrams):
         collection.sort(key=lambda x: -x[1])
 
-    print '#include "profiles/%s.h"' % data['name']
+    print '#include "profiles/langs/%s.h"' % data['name']
     print '#include <unordered_map>'
     print '#include <tuple>'
     print ''
@@ -65,7 +65,7 @@ def print_impl(filename):
     print '  %s, %s, %s' % tuple(data['n_words'])
     print '};\n\n'
 
-    print 'namespace profiles {\n'
+    print 'namespace langdetectpp { namespace profiles { namespace langs {\n'
 
     print 'std::unordered_map<uint32_t, size_t> get_%s_one_grams() {' % data['name']
     print '  std::unordered_map<uint32_t, size_t> result = %s;' % ('%s_one_grams' % data['name'])
@@ -87,7 +87,7 @@ def print_impl(filename):
     print '  return result;'
     print '}\n'
 
-    print '} // namespace profiles'
+    print '}}} // langdetectpp::profiles::langs'
 
 
 def print_header(filename):
@@ -99,7 +99,7 @@ def print_header(filename):
     print '#include <tuple>'
     print '#include <folly/Hash.h>'
     print ''
-    print 'namespace profiles {'
+    print 'namespace langdetectpp { namespace profiles { namespace langs {'
     print ''
     print 'std::unordered_map<uint32_t, size_t> get_%s_one_grams();' % data['name']
     print ''
@@ -109,7 +109,7 @@ def print_header(filename):
     print ''
     print 'std::tuple<size_t, size_t, size_t> get_%s_n_words();' % data['name']
     print ''
-    print '} // namespace profiles'
+    print '}}} // langdetectpp::profiles::langs'
     print ''
 
 def throw_usage():

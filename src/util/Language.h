@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-namespace util {
+namespace langdetectpp { namespace util {
 
 enum class Language {
   AR, DE, EN, ES, FR, IT, RU
@@ -9,4 +9,7 @@ enum class Language {
 
 std::string stringOfLanguage(Language lang);
 
-} // util
+std::string englishLanguageName(Language lang);
+
+
+}} // langdetectpp::util

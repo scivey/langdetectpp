@@ -9,7 +9,7 @@
 #include "util/CircleArray.h"
 #include "ngrams/ExtractedNGrams.h"
 
-namespace ngrams {
+namespace langdetectpp { namespace ngrams {
 
 class NGramExtractor {
  protected:
@@ -27,4 +27,4 @@ class NGramExtractor {
   ExtractedNGrams extract();
 };
 
-}
+}} // langdetectpp::ngrams

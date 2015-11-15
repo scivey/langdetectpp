@@ -1,7 +1,7 @@
 #pragma once
 #include <random>
 
-namespace util {
+namespace langdetectpp { namespace util {
 
 class NormalDist {
  protected:
@@ -41,4 +41,4 @@ class Alpha {
   }
 };
 
-} // util
+}} // langdetectpp::util

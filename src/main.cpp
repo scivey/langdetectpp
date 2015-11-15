@@ -1,4 +1,6 @@
 #include <string>
+#include <sstream>
+
 #include <iostream>
 #include <vector>
 #include <tuple>
@@ -18,26 +20,40 @@
 #include "util/misc.h"
 #include "util/Language.h"
 #include "ngrams/NGramExtractor.h"
-#include "detection/Detector.h"
+#include "Detector.h"
 using namespace std;
-
+namespace bfs = boost::filesystem;
 int main() {
   vector<string> files {
-    "/home/scott/fbcode/data_structures/text/ar_from_wikipedia.txt",
-    "/home/scott/fbcode/data_structures/text/en_jezebel.txt",
-    "/home/scott/fbcode/data_structures/text/ru_from_wikipedia.txt",
-    "/home/scott/fbcode/data_structures/text/de_from_wikipedia.txt",
-    "/home/scott/fbcode/data_structures/text/fr_from_wikipedia.txt",
-    "/home/scott/fbcode/data_structures/text/es_from_wikipedia.txt"
+    "ar_from_wikipedia.txt",
+    "en_jezebel.txt",
+    "ru_from_wikipedia.txt",
+    "de_from_wikipedia.txt",
+    "fr_from_wikipedia.txt",
+    "es_from_wikipedia.txt"
   };
-  auto pgroup = profiles::ProfileGroup::create();
-  detection::Detector detector(pgroup);
-  for (string fname: files) {
-    string data;
-    folly::readFile(fname.c_str(), data);
-    // LOG(INFO) << data;
-    util::Language lang = detector.detect(data);
-    LOG(INFO) << fname << "\t->\t" << util::stringOfLanguage(lang);
 
+  size_t maxLen = 0;
+  for (auto &elem: files) {
+    if (elem.size() > maxLen) {
+      maxLen = elem.size();
+    }
+  }
+  auto detector = langdetectpp::Detector::create();
+  bfs::path basePath = bfs::canonical("./../text");
+  for (string fname: files) {
+    bfs::path filePath = basePath / fname;
+    string strPath = filePath.string();
+    string data;
+    folly::readFile(strPath.c_str(), data);
+    // LOG(INFO) << data;
+    auto lang = detector->detect(data);
+
+    ostringstream logLine;
+    logLine << fname;
+    for (size_t i = fname.size(); i < maxLen; i++) {
+      logLine << " ";
+    }
+    LOG(INFO) << logLine.str() << "  ->  " << langdetectpp::util::englishLanguageName(lang);
   }
 }

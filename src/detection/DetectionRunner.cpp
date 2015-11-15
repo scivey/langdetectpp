@@ -12,21 +12,19 @@
 #include "detection/DetectionRunner.h"
 
 using namespace std;
-using util::UniformIntDist;
-using util::Alpha;
-using profiles::ProfileGroup;
-namespace detection {
+using langdetectpp::util::UniformIntDist;
+using langdetectpp::util::Alpha;
+using langdetectpp::profiles::ProfileGroup;
 
-const double STARTING_ALPHA = 0.5;
-const double ALPHA_WIDTH = 0.05;
-const double PROB_THRESHOLD = 0.1;
+namespace langdetectpp { namespace detection {
+
 const double CONV_THRESHOLD = 0.99999;
 const size_t BASE_FREQ = 10000;
 const size_t ITERATION_LIMIT = 1000;
 
 DetectionRunner::DetectionRunner(shared_ptr<ProfileGroup> profGroup, ngrams::ExtractedNGrams &extracted)
   : profileGroup_(profGroup), textNGrams_(extracted){
-    for (auto &elem: profileGroup_->profiles) {
+    for (size_t i = 0; i < profileGroup_->profiles.size(); i++) {
       langScores_.push_back(0.0);
     }
   }
@@ -91,10 +89,10 @@ std::vector<double>* DetectionRunner::getLanguageScoresForRandomNGramOrNull() {
 std::vector<double> DetectionRunner::runTrial() {
   vector<double> probs;
   double startingProb = 1.0 / (double) profileGroup_->profiles.size();
-  for (auto &elem: profileGroup_->profiles) {
+  for (size_t i = 0; i < profileGroup_->profiles.size(); i++) {
     probs.push_back(startingProb);
   }
-  for (size_t j = 0;; j++) {
+  for (size_t i = 0;; i++) {
     double weight = alpha_.get() / BASE_FREQ;
     auto langWordScores = getLanguageScoresForRandomNGramOrNull();
     if (langWordScores != nullptr) {
@@ -103,20 +101,20 @@ std::vector<double> DetectionRunner::runTrial() {
       }
     }
 
-    if (j % 5 == 0) {
+    if (i % 5 == 0) {
       double maxp = 0.0;
       double sump = 0.0;
       for (auto &elem: probs) {
         sump += elem;
       }
-      for (size_t i = 0; i < probs.size(); i++) {
-        double p = probs[i] / sump;
+      for (size_t j = 0; j < probs.size(); j++) {
+        double p = probs[j] / sump;
         if (maxp < p) {
           maxp = p;
         }
-        probs[i] = p;
+        probs[j] = p;
       }
-      if (maxp > CONV_THRESHOLD || j >= ITERATION_LIMIT) {
+      if (maxp > CONV_THRESHOLD || i >= ITERATION_LIMIT) {
         break;
       }
     }
@@ -124,4 +122,4 @@ std::vector<double> DetectionRunner::runTrial() {
   return probs;
 }
 
-} // detection
+}} // langdetectpp::detection

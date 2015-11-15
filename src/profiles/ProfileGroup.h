@@ -5,7 +5,8 @@
 #include <unordered_map>
 #include <folly/Hash.h>
 #include "profiles/Profile.h"
-namespace profiles {
+
+namespace langdetectpp { namespace profiles {
 
 class ProfileGroup {
  protected:
@@ -19,4 +20,4 @@ class ProfileGroup {
   static std::shared_ptr<ProfileGroup> create();
 };
 
-} // profiles
+}} // langdetectpp::profiles

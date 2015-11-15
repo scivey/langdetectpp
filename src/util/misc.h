@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <folly/Conv.h>
 
-namespace util {
+namespace langdetectpp { namespace util {
 
 template<typename T1, typename T2>
 std::string tupleString(const std::tuple<T1, T2> &aTuple) {
@@ -46,4 +46,4 @@ std::unordered_map<T, size_t> countVec(const std::vector<T> &elems) {
 }
 
 
-} // util
+}} // langdetectpp::util

@@ -2,17 +2,11 @@
 #include <unordered_map>
 #include <tuple>
 #include <string>
-#include "profiles/ar.h"
-#include "profiles/de.h"
-#include "profiles/en.h"
-#include "profiles/es.h"
-#include "profiles/fr.h"
-#include "profiles/it.h"
-#include "profiles/ru.h"
 #include "util/Language.h"
+#include <folly/Hash.h>
 #include <memory>
 
-namespace profiles {
+namespace langdetectpp { namespace profiles {
 
 class ProfileGroup;
 
@@ -41,4 +35,4 @@ class Profile {
   static std::shared_ptr<Profile> loadArabic();
 };
 
-}
+}} // langdetectpp::profiles

@@ -4,7 +4,7 @@
 #include <array>
 #include <tuple>
 #include <functional>
-namespace util {
+namespace langdetectpp { namespace util {
 
   template<typename T, size_t n>
   class CircleArray {
@@ -55,4 +55,4 @@ namespace util {
 
   };
 
-} // namespace util
+}} // langdetectpp::util

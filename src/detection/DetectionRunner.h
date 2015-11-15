@@ -6,7 +6,8 @@
 #include "util/Language.h"
 #include "util/stats.h"
 #include "ngrams/ExtractedNGrams.h"
-namespace detection {
+
+namespace langdetectpp { namespace detection {
 
 class DetectionRunner {
  protected:
@@ -26,4 +27,4 @@ class DetectionRunner {
   util::Language detect();
 };
 
-} // detection
+}} // langdetectpp::detection
