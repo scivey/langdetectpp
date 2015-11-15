@@ -4,12 +4,12 @@ C++ port of the Java [https://github.com/shuyo/language-detection](language-dete
 
 It analyzes UTF8-encoded text and returns the most likely human language of the contents.
 
-It uses the same language profiles as the original library, which are based on 1-3 character N-grams.  These profiles cover 55 different language.
+It uses the same language profiles as the original library, which are based on 1-3 character N-grams.  These profiles cover 55 different languages.
 
 ```c++
 #include <string>
 #include <iostream>
-#include <langdetectpp/langdetectpp>
+#include <langdetectpp/langdetectpp.h>
 
 using langdetectpp::Detector;
 using langdetectpp::Language;
