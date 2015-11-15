@@ -1,0 +1,127 @@
+#include <vector>
+#include <string>
+#include "profiles/Profile.h"
+#include "util/Language.h"
+#include "profiles/Profile.h"
+#include "profiles/ProfileGroup.h"
+#include "util/CircleArray.h"
+#include "util/misc.h"
+#include "util/stats.h"
+#include "ngrams/NGramExtractor.h"
+#include "ngrams/ExtractedNGrams.h"
+#include "detection/DetectionRunner.h"
+
+using namespace std;
+using util::UniformIntDist;
+using util::Alpha;
+using profiles::ProfileGroup;
+namespace detection {
+
+const double STARTING_ALPHA = 0.5;
+const double ALPHA_WIDTH = 0.05;
+const double PROB_THRESHOLD = 0.1;
+const double CONV_THRESHOLD = 0.99999;
+const size_t BASE_FREQ = 10000;
+const size_t ITERATION_LIMIT = 1000;
+
+DetectionRunner::DetectionRunner(shared_ptr<ProfileGroup> profGroup, ngrams::ExtractedNGrams &extracted)
+  : profileGroup_(profGroup), textNGrams_(extracted){
+    for (auto &elem: profileGroup_->profiles) {
+      langScores_.push_back(0.0);
+    }
+  }
+
+util::Language DetectionRunner::getBestScore() {
+  double maxScore = 0.0;
+  size_t maxIndex = 0;
+  for (size_t i = 0; i < langScores_.size(); i++) {
+    auto score = langScores_[i];
+    if (score > maxScore) {
+      maxScore = score;
+      maxIndex = i;
+    }
+  }
+  auto winningLang = profileGroup_->profiles.at(maxIndex);
+  return winningLang->getLanguage();
+}
+
+util::Language DetectionRunner::detect() {
+  const size_t numTrials = 7;
+  for (size_t trialN = 0; trialN < numTrials; trialN++) {
+    alpha_.warble();
+    auto probs = runTrial();
+    for (size_t j = 0; j < langScores_.size(); j++) {
+      double divisor = (double) trialN;
+      if (divisor <= 0) {
+        divisor = 1.0;
+      }
+      double toAdd = (probs[j] / divisor);
+      langScores_[j] += toAdd;
+    }
+  }
+  return getBestScore();
+}
+
+std::vector<double>* DetectionRunner::getLanguageScoresForRandomNGramOrNull() {
+  auto ngLen = ngramLengthDist_.get();
+  vector<double> *langWordScores = nullptr;
+  if (ngLen == 1) {
+    auto ng = textNGrams_.randomOneGram();
+    auto found = profileGroup_->oneGramWeights.find(ng);
+    if (found != profileGroup_->oneGramWeights.end()) {
+      langWordScores = &found->second;
+    }
+  } else if (ngLen == 2) {
+    auto ng = textNGrams_.randomBigram();
+    auto found = profileGroup_->bigramWeights.find(ng);
+    if (found != profileGroup_->bigramWeights.end()) {
+      langWordScores = &found->second;
+    }
+  } else if (ngLen == 3) {
+    auto ng = textNGrams_.randomTrigram();
+    auto found = profileGroup_->trigramWeights.find(ng);
+    if (found != profileGroup_->trigramWeights.end()) {
+      langWordScores = &found->second;
+    }
+  }
+  return langWordScores;
+}
+
+
+std::vector<double> DetectionRunner::runTrial() {
+  vector<double> probs;
+  double startingProb = 1.0 / (double) profileGroup_->profiles.size();
+  for (auto &elem: profileGroup_->profiles) {
+    probs.push_back(startingProb);
+  }
+  for (size_t j = 0;; j++) {
+    double weight = alpha_.get() / BASE_FREQ;
+    auto langWordScores = getLanguageScoresForRandomNGramOrNull();
+    if (langWordScores != nullptr) {
+      for (size_t k = 0; k < langWordScores->size(); k++) {
+        probs[k] *= (weight + langWordScores->at(k));
+      }
+    }
+
+    if (j % 5 == 0) {
+      double maxp = 0.0;
+      double sump = 0.0;
+      for (auto &elem: probs) {
+        sump += elem;
+      }
+      for (size_t i = 0; i < probs.size(); i++) {
+        double p = probs[i] / sump;
+        if (maxp < p) {
+          maxp = p;
+        }
+        probs[i] = p;
+      }
+      if (maxp > CONV_THRESHOLD || j >= ITERATION_LIMIT) {
+        break;
+      }
+    }
+  }
+  return probs;
+}
+
+} // detection

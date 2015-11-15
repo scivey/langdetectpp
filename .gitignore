@@ -1,0 +1,10 @@
+build
+*.o
+a.out
+*.pyc
+tmp
+temp
+*.log
+node_modules
+*.sublime-workspace
+
