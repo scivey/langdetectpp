@@ -1,0 +1,9 @@
+[submodule "external/googletest"]
+	path = external/googletest
+	url = git@github.com:google/googletest
+[submodule "external/mirror_utf8cpp"]
+	path = external/mirror_utf8cpp
+	url = git@github.com:staticlibs/mirror_utf8cpp
+[submodule "external/langdetect"]
+	path = external/langdetect
+	url = git@github.com:mimino666/langdetect
