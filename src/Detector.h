@@ -1,5 +1,5 @@
 #include <memory>
-#include "util/Language.h"
+#include "Language.h"
 
 namespace langdetectpp {
 
@@ -12,7 +12,7 @@ protected:
   std::unique_ptr<detection::DetectorImpl> pImpl_;
   Detector(std::unique_ptr<detection::DetectorImpl>);
 public:
-  util::Language detect(const std::string&);
+  Language detect(const std::string&);
   static std::shared_ptr<Detector> create();
 };
 

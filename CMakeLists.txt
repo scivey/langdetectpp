@@ -51,7 +51,7 @@ set(TEST_LIBS
 )
 
 set(LIB_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/util/Language.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Language.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Detector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/profiles/Profile.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/profiles/ProfileGroup.cpp
@@ -96,6 +96,7 @@ set(LIB_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/profiles/langs/pt.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/profiles/langs/ro.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/profiles/langs/ru.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/profiles/langs/sk.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/profiles/langs/sl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/profiles/langs/so.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/profiles/langs/sq.cpp

@@ -1,7 +1,7 @@
 #include <vector>
 #include <string>
 #include "profiles/Profile.h"
-#include "util/Language.h"
+#include "Language.h"
 #include "profiles/Profile.h"
 #include "profiles/ProfileGroup.h"
 #include "util/CircleArray.h"
@@ -29,7 +29,7 @@ DetectionRunner::DetectionRunner(shared_ptr<ProfileGroup> profGroup, ngrams::Ext
     }
   }
 
-util::Language DetectionRunner::getBestScore() {
+Language DetectionRunner::getBestScore() {
   double maxScore = 0.0;
   size_t maxIndex = 0;
   for (size_t i = 0; i < langScores_.size(); i++) {
@@ -43,7 +43,7 @@ util::Language DetectionRunner::getBestScore() {
   return winningLang->getLanguage();
 }
 
-util::Language DetectionRunner::detect() {
+Language DetectionRunner::detect() {
   const size_t numTrials = 7;
   for (size_t trialN = 0; trialN < numTrials; trialN++) {
     alpha_.warble();

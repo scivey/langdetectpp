@@ -18,7 +18,7 @@
 #include "profiles/ProfileGroup.h"
 #include "util/CircleArray.h"
 #include "util/misc.h"
-#include "util/Language.h"
+#include "Language.h"
 #include "ngrams/NGramExtractor.h"
 #include "Detector.h"
 using namespace std;
@@ -54,6 +54,6 @@ int main() {
     for (size_t i = fname.size(); i < maxLen; i++) {
       logLine << " ";
     }
-    LOG(INFO) << logLine.str() << "  ->  " << langdetectpp::util::englishLanguageName(lang);
+    LOG(INFO) << logLine.str() << "  ->  " << langdetectpp::englishLanguageName(lang);
   }
 }

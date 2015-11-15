@@ -4,6 +4,7 @@
 #include "Detector.h"
 #include "detection/DetectorImpl.h"
 #include "profiles/ProfileGroup.h"
+#include "Language.h"
 
 using namespace std;
 using langdetectpp::detection::DetectorImpl;
@@ -12,7 +13,7 @@ using langdetectpp::profiles::ProfileGroup;
 namespace langdetectpp {
   Detector::Detector(unique_ptr<DetectorImpl> pImpl): pImpl_(std::move(pImpl)) {}
 
-  util::Language Detector::detect(const string &text) {
+  Language Detector::detect(const string &text) {
     return pImpl_->detect(text);
   }
 

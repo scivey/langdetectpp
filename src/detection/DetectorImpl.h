@@ -2,7 +2,7 @@
 
 #include <memory>
 #include "ngrams/NGramExtractor.h"
-#include "util/Language.h"
+#include "Language.h"
 #include "profiles/ProfileGroup.h"
 #include "detection/DetectionRunner.h"
 
@@ -14,7 +14,7 @@ class DetectorImpl {
  public:
   DetectorImpl(std::shared_ptr<profiles::ProfileGroup> profileGroup)
     : profileGroup_(profileGroup){}
-  util::Language detect(const std::string &text) {
+  Language detect(const std::string &text) {
     ngrams::NGramExtractor extractor(text);
     auto extracted = extractor.extract();
     DetectionRunner runner(profileGroup_, extracted);

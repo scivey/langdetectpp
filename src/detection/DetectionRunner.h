@@ -3,7 +3,7 @@
 #include <memory>
 #include <tuple>
 #include "profiles/Profile.h"
-#include "util/Language.h"
+#include "Language.h"
 #include "util/stats.h"
 #include "ngrams/ExtractedNGrams.h"
 
@@ -17,14 +17,14 @@ class DetectionRunner {
   util::UniformIntDist ngramLengthDist_ {1, 3};
   util::Alpha alpha_ {0.5, 0.05};
   std::vector<double> runTrial();
-  util::Language getBestScore();
+  Language getBestScore();
   std::vector<double>* getLanguageScoresForRandomNGramOrNull();
  public:
   DetectionRunner(
     std::shared_ptr<profiles::ProfileGroup>,
     ngrams::ExtractedNGrams&
   );
-  util::Language detect();
+  Language detect();
 };
 
 }} // langdetectpp::detection
